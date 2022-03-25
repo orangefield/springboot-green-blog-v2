@@ -1,5 +1,7 @@
 package site.metacoding.blogv2.service;
 
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
@@ -25,6 +27,17 @@ public class UserService {
         // 로그인 처리 쿼리를 JPA에서 제공하지 않으니 직접 만들어야 한다
         User userEntity = userRepository.mLogin(loginDto.getUsername(), loginDto.getPassword());
         return userEntity;
+    }
+
+    public User 회원정보(Integer id) {
+        Optional<User> userOp = userRepository.findById(id);
+
+        if (userOp.isPresent()) {
+            return userOp.get();
+        } else {
+            throw new RuntimeException("아이디를 찾을 수 없습니다.");
+        }
+
     }
 
 }
