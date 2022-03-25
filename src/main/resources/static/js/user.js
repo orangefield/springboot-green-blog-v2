@@ -1,14 +1,26 @@
 // 1. 이벤트 리스너
-    $("#btn-join").click(() => {
-    join();
-    });
 
-    $("#btn-login").click(() => {
-    login();
-    });
+$("#btn-join").click(() => {
+join();
+});
+
+$("#btn-login").click(() => {
+login();
+});
 
 
 // 2. 기능
+
+// 유저네임 기억하기 메서드
+function usernameRemember() {
+    let cookies = document.cookie.split("=");
+    // console.log(cookies[1]);
+    $("#username").val(cookies[1]);
+}
+usernameRemember();
+
+
+
 // 회원가입 메서드
 let join = async () => {
     // (1) username, password, email, addr을 찾아서 JS 오브젝트로 만든다
@@ -20,7 +32,7 @@ let join = async () => {
     }
 
     // (2) JSON 변환과 fetch 요청
-    let response = await fetch("/api/join", {
+    let response = await fetch("/join", {
         method: "POST",
         body: JSON.stringify(joinDto),
         headers: {
@@ -42,14 +54,18 @@ let join = async () => {
 
 // 로그인 요청 메서드
 let login = async () => {
+
+    let checked = $("#remember").is(":checked");
+
     // (1) username, password 찾아서 JS 오브젝트로 만들기
     let loginDto = {
         username: $("#username").val(),
-        password: $("#password").val()
+        password: $("#password").val(),
+        remember: checked ? "on" : "off" 
     }
 
     // (2) JSON 변환과 fetch 요청
-    let response = await fetch("/api/login", {
+    let response = await fetch("/login", {
         method: "POST",
         body: JSON.stringify(loginDto),
         headers: {
@@ -62,7 +78,7 @@ let login = async () => {
     // (3) 로그인 성공시 메인페이지로 이동
     if (responseParse.code == 1) {
         alert("로그인 성공");
-        location.href = "/";
+       location.href = "/";
     } else {
         alert("로그인 실패");
     }
