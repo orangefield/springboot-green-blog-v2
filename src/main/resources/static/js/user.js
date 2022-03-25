@@ -8,10 +8,41 @@ $("#btn-login").click(() => {
 login();
 });
 
+$("#btn-update").click(() => {
+    update();
+});
+
 
 // 2. 기능
 
-// 유저네임 기억하기 메서드
+// 회원정보 수정 함수
+async function update() {
+    let id = $("#id").val();
+    let updateDto = {
+        password: $("#password").val(),
+        email: $("#email").val(),
+        addr: $("#addr").val()
+    }
+
+    let response = await fetch(`/s/api/user/${id}`, {
+        method: "PUT",
+        body: JSON.stringify(updateDto),
+        headers: {
+            "Content-Type": "application/json; charset=utf-8"
+        }
+    });
+
+    let responseParse = await response.json();
+
+    if (responseParse.code == 1) {
+        alert("업데이트 성공");
+        location.href = `/s/user/${id}`;
+    } else {
+        alert("업데이트 실패");
+    }
+}
+
+// 유저네임 기억하기 함수
 function usernameRemember() {
     let cookies = document.cookie.split("=");
     // console.log(cookies[1]);
@@ -21,7 +52,7 @@ usernameRemember();
 
 
 
-// 회원가입 메서드
+// 회원가입 함수
 let join = async () => {
     // (1) username, password, email, addr을 찾아서 JS 오브젝트로 만든다
     let joinDto = {
@@ -52,7 +83,7 @@ let join = async () => {
 }
 
 
-// 로그인 요청 메서드
+// 로그인 요청 함수
 let login = async () => {
 
     let checked = $("#remember").is(":checked");
@@ -83,4 +114,5 @@ let login = async () => {
         alert("로그인 실패");
     }
 }
+
 
