@@ -19,7 +19,8 @@ import site.metacoding.blogv2.web.api.dto.user.LoginDto;
 public class MyFilter2 implements Filter {
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+    public void doFilter(ServletRequest request, ServletResponse response,
+            FilterChain chain)
             throws IOException, ServletException {
         System.out.println("MyFilter 2");
 
