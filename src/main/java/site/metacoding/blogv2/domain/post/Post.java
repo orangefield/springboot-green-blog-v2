@@ -15,6 +15,8 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -49,16 +51,20 @@ public class Post { // N이 Driving Table, FK의 주인
     @Column(nullable = false)
     private String content;
 
-    @ColumnDefault("0")
+    // @ColumnDefault("0")
     @Column(nullable = false)
     private Integer pageCount;
 
-    private String comment;
+    @JsonIgnoreProperties({ "post" }) // MessageConverter에게 알려주자. 그만 하라고
+    @OneToMany(mappedBy = "post")
+    private List<Comment> comment;
 
+    // @JsonIgnoreProperties({ "password" })
     @JoinColumn(name = "userId")
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
+    @JsonIgnoreProperties({ "post" })
     @OneToMany(mappedBy = "post") // 연관관계의 주인의 변수명
     private List<Comment> comments; // 역방향 매핑
 
