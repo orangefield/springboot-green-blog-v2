@@ -42,13 +42,7 @@ async function update() {
     }
 }
 
-// 유저네임 기억하기 함수
-function usernameRemember() {
-    let cookies = document.cookie.split("=");
-    // console.log(cookies[1]);
-    $("#username").val(cookies[1]);
-}
-usernameRemember();
+
 
 
 

@@ -21,9 +21,9 @@ public class UserController {
     // 앱은 얘 요청 X
     // 웹은 얘 요청 O
     @GetMapping("/s/user/{id}")
-    public String userInfo(@PathVariable Integer id, Model model) {
-        User userEntity = userService.회원정보(id);
-        model.addAttribute("user", userEntity);
+    public String userInfo(@PathVariable Integer id /* , Model model */) {
+        // User userEntity = userService.회원정보(id);
+        // model.addAttribute("user", userEntity);
         return "user/updateForm";
     }
 
