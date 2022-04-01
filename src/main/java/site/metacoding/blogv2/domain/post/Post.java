@@ -59,7 +59,7 @@ public class Post { // N이 Driving Table, FK의 주인
     @OneToMany(mappedBy = "post")
     private List<Comment> comment;
 
-    // @JsonIgnoreProperties({ "password" })
+    @JsonIgnoreProperties({ "password" })
     @JoinColumn(name = "userId")
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;
